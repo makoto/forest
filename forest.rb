@@ -73,7 +73,7 @@ class Forest
   def initialize(data)
     @trees = []
     p data
-    grouped_tree = data.group_by{|d| d.last == nil}
+    grouped_tree = data.group_by{|d| d.last == nil || d.last == "NULL" || d.last == "" }
     @root = grouped_tree[true]
     @children = grouped_tree[false]
     # p @root
@@ -100,7 +100,9 @@ class Forest
   end
   
   def add_root
+    p "ADDING TO ROOT"
     @root.map do |a|
+      # p a.first.to_s
       @trees << Tree::TreeNode.new(a.first.to_s, get_content(a))
     end
   end
@@ -114,12 +116,13 @@ private
     array[1..-2].join(",")
   end
 
-  def add_recursive(ancestors, decendants)
-    
+  def add_recursive(ancestors, decendants, previous = 0)
+    p "ADDING TO CHILDREN"
     remaining = []
     current_generation = []
+    counter = decendants.size
     decendants.map do |c| 
-      # p "C #{c.inspect}"
+      p "#{counter}: #{c.inspect}" if counter % 10 == 0
       child  = c.first
       parent = c.last
       if parent_obj = ancestors.find{|a| a.name.to_s == parent.to_s}
@@ -128,11 +131,14 @@ private
       else
         remaining << c
       end
+      counter = counter - 1
     end
-    if remaining == []
+    p "remaining.size: #{remaining.size} previous: #{previous}"
+    if remaining == [] || remaining.size == previous
       # p "Ending"
     else
-      add_recursive(current_generation , remaining)
+      p remaining
+      add_recursive(current_generation , remaining, remaining.size)
     end
   end
 end
@@ -166,4 +172,4 @@ CSV.open(file_name, 'r') do |row|
 end
 
 forest = Forest.new(data)
-forest.print_report
+forest.print_report(100)
