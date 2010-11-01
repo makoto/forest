@@ -72,7 +72,7 @@ class Forest
   
   def initialize(data)
     @trees = []
-    p data
+    # p data
     grouped_tree = data.group_by{|d| d.last == nil || d.last == "NULL" || d.last == "" }
     @root = grouped_tree[true]
     @children = grouped_tree[false]
@@ -128,7 +128,7 @@ class Forest
   end
   
   def add_root
-    p "ADDING TO ROOT"
+    # p "ADDING TO ROOT"
     @root.map do |a|
       # p a.first.to_s
       @trees << Tree::TreeNode.new(a.first.to_s, get_content(a))
@@ -160,11 +160,11 @@ private
       end
       counter = counter - 1
     end
-    p "remaining.size: #{remaining.size} previous: #{previous}"
+    # p "remaining.size: #{remaining.size} previous: #{previous}"
     if remaining == [] || remaining.size == previous
       @orphants = remaining 
     else
-      p remaining
+      # p remaining
       add_recursive(current_generation , remaining, remaining.size)
     end
   end
