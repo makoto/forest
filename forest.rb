@@ -86,6 +86,10 @@ class Forest
     @trees.values.inject(0){|sum, current| sum + current.size}
   end
   
+  def sd
+    standard_deviation(@trees.values.map{|v| v.size })
+  end
+  
   def avg
     sum.to_f / @trees.size
   end
@@ -119,12 +123,11 @@ class Forest
   end
   
   def print_report(num = 3)
-    puts "Total #{sum}: Average :#{avg} Max size :#{max_sum} Max height :#{max_height} Max width :#{max_width}"
+    puts "Total #{sum}: Average :#{avg} Max size :#{max_sum} Max height :#{max_height} Max width :#{max_width}, Sandard Deviation #{sd}"
     puts "Top #{num} trees"
-    top(num).each {|t| 
-      puts t.size
-      puts t.node_height
-      puts t.print_tree
+    top(num).each_with_index {|value, index| 
+      puts "##{index + 1}, sum #{value.size}, height #{value.node_height}"
+      puts value.print_tree
     }
   end
   
@@ -147,6 +150,28 @@ private
 
   def get_content(array)
     array[1..-2].join(",")
+  end
+  
+  def variance(population)
+    n = 0
+    mean = 0.0
+    s = 0.0
+    population.each { |x|
+      n = n + 1
+      delta = x - mean
+      mean = mean + (delta / n)
+      s = s + delta * (x - mean)
+    }
+    # if you want to calculate std deviation
+    # of a sample change this to "s / (n-1)"
+    return s / n
+  end
+
+  # calculate the standard deviation of a population
+  # accepts: an array, the population
+  # returns: the standard deviation
+  def standard_deviation(population)
+    Math.sqrt(variance(population))
   end
 
   def add_recursive(ancestors, decendants, previous = 0)
