@@ -86,7 +86,19 @@ class Forest
   end
   
   def avg
-    total / @trees.size
+    total.to_f / @trees.size
+  end
+  
+  def max_total
+    @trees.max{|a, b| a.size <=> b.size }.size
+  end
+  
+  def max_height
+    @trees.max{|a, b| a.node_height <=> b.node_height }.node_height
+  end
+  
+  def max_width
+    @trees.max{|a, b| a.children.size <=> b.children.size }.children.size
   end
   
   def top(n)
@@ -94,9 +106,13 @@ class Forest
   end
   
   def print_report(num = 3)
-    puts "Total #{total}: Average :#{avg}"
+    puts "Total #{total}: Average :#{avg} Max size :#{max_total} Max height :#{max_height} Max width :#{max_width}"
     puts "Top #{num} trees"
-    top(num).each {|t| puts t.size; puts t.print_tree}
+    top(num).each {|t| 
+      puts t.size
+      puts t.node_height
+      puts t.print_tree
+    }
   end
   
   def add_root
@@ -117,7 +133,6 @@ private
   end
 
   def add_recursive(ancestors, decendants, previous = 0)
-    p "ADDING TO CHILDREN"
     remaining = []
     current_generation = []
     counter = decendants.size
