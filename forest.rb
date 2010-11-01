@@ -71,12 +71,9 @@ class Forest
   attr_accessor :trees, :orphants
   
   def initialize(data)
-    @trees = {}
-    # p data
-    grouped_tree = data.group_by{|d| d.last == nil || d.last == "NULL" || d.last == "" }
+    grouped_tree = data.group_by{|d| [nil, "NULL", ""].include?(d.last)}
     @root = grouped_tree[true]
     @children = grouped_tree[false]
-    # p @root
     add_root
     add_children
   end
@@ -93,24 +90,28 @@ class Forest
     sum.to_f / @trees.size
   end
   
-  def max_sum
-    @trees.values.max{|a, b| a.size <=> b.size }.size
+  def biggest_node
+    max_node(:size)
   end
   
   def heighest_node
-    @trees.values.max{|a, b| a.node_height <=> b.node_height }
+    max_node(:node_height)
   end
   
+  def widest_node
+    max_node(:children_size)
+  end
+  
+  def max_sum
+    biggest_node.size
+  end
+
   def max_height
     heighest_node.node_height + 1
   end
-
-  def widest_node
-    @trees.values.max{|a, b| a.children.size <=> b.children.size }
-  end
   
   def max_width
-    widest_node.children.size
+    widest_node.children_size
   end
   
   def top(n)
@@ -128,11 +129,10 @@ class Forest
   end
   
   def add_root
-    # p "ADDING TO ROOT"
-    @root.map do |a|
-      key = a.first.to_s
-      # p a.first.to_s
-      @trees[key] = Tree::TreeNode.new(key, get_content(a))
+    @trees = @root.reduce({}) do |final, current|
+      key = current.first.to_s
+      final[key] = Tree::TreeNode.new(key, get_content(current))
+      final
     end
   end
   
@@ -141,6 +141,10 @@ class Forest
   end
   
 private 
+  def max_node(obj)
+    @trees.values.max{|a, b| a.send(obj) <=> b.send(obj) }
+  end
+
   def get_content(array)
     array[1..-2].join(",")
   end
@@ -175,6 +179,10 @@ end
 class Tree::TreeNode
   include Enumerable
   
+  def children_size
+    children.size
+  end
+  
   def print_tree(level = 0)
     if is_root?
       print "*"
@@ -195,7 +203,6 @@ end
 if __FILE__ == $0  
   data = []
   file_name = ARGV[0]
-  p file_name
   CSV.open(file_name, 'r') do |row|
     data << row
   end
