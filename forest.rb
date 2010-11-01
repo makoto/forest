@@ -191,14 +191,14 @@ class Tree::TreeNode
   end
 end
 
-# p __FILE__
-# 
-# data = []
-# file_name = ARGV[0]
-# p file_name
-# CSV.open(file_name, 'r') do |row|
-#   data << row
-# end
-# 
-# forest = Forest.new(data)
-# forest.print_report(100)
+if __FILE__ == $0  
+  data = []
+  file_name = ARGV[0]
+  p file_name
+  CSV.open(file_name, 'r') do |row|
+    data << row
+  end
+
+  forest = Forest.new(data)
+  forest.print_report(100)
+end
