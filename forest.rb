@@ -71,7 +71,7 @@ class Forest
   attr_accessor :trees, :orphants
   
   def initialize(data)
-    @trees = []
+    @trees = {}
     # p data
     grouped_tree = data.group_by{|d| d.last == nil || d.last == "NULL" || d.last == "" }
     @root = grouped_tree[true]
@@ -86,7 +86,7 @@ class Forest
   end
   
   def sum
-    @trees.inject(0){|sum, current| sum + current.size}
+    @trees.values.inject(0){|sum, current| sum + current.size}
   end
   
   def avg
@@ -94,11 +94,11 @@ class Forest
   end
   
   def max_sum
-    @trees.max{|a, b| a.size <=> b.size }.size
+    @trees.values.max{|a, b| a.size <=> b.size }.size
   end
   
   def heighest_node
-    @trees.max{|a, b| a.node_height <=> b.node_height }    
+    @trees.values.max{|a, b| a.node_height <=> b.node_height }
   end
   
   def max_height
@@ -106,7 +106,7 @@ class Forest
   end
 
   def widest_node
-    @trees.max{|a, b| a.children.size <=> b.children.size }
+    @trees.values.max{|a, b| a.children.size <=> b.children.size }
   end
   
   def max_width
@@ -114,7 +114,7 @@ class Forest
   end
   
   def top(n)
-    @trees.sort {|x,y| y.size <=> x.size }[0..(n - 1)]
+    @trees.values.sort {|x,y| y.size <=> x.size }[0..(n - 1)]
   end
   
   def print_report(num = 3)
@@ -130,8 +130,9 @@ class Forest
   def add_root
     # p "ADDING TO ROOT"
     @root.map do |a|
+      key = a.first.to_s
       # p a.first.to_s
-      @trees << Tree::TreeNode.new(a.first.to_s, get_content(a))
+      @trees[key] = Tree::TreeNode.new(key, get_content(a))
     end
   end
   
@@ -146,15 +147,15 @@ private
 
   def add_recursive(ancestors, decendants, previous = 0)
     remaining = []
-    current_generation = []
+    current_generation = {}
     counter = decendants.size
     decendants.map do |c| 
       p "#{counter}: #{c.inspect}" if counter % 10 == 0
       child  = c.first
       parent = c.last
-      if parent_obj = ancestors.find{|a| a.name.to_s == parent.to_s}
+      if parent_obj = ancestors[parent.to_s]
         parent_obj << Tree::TreeNode.new(child.to_s, get_content(c))
-        current_generation << parent_obj[child.to_s]
+        current_generation[child.to_s] = parent_obj[child.to_s]
       else
         remaining << c
       end
