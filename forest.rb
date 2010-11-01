@@ -68,7 +68,7 @@ require 'csv'
 
 
 class Forest
-  attr_accessor :trees
+  attr_accessor :trees, :orphants
   
   def initialize(data)
     @trees = []
@@ -81,24 +81,36 @@ class Forest
     add_children
   end
   
-  def total
+  def count
+    @trees.size
+  end
+  
+  def sum
     @trees.inject(0){|sum, current| sum + current.size}
   end
   
   def avg
-    total.to_f / @trees.size
+    sum.to_f / @trees.size
   end
   
-  def max_total
+  def max_sum
     @trees.max{|a, b| a.size <=> b.size }.size
   end
   
+  def heighest_node
+    @trees.max{|a, b| a.node_height <=> b.node_height }    
+  end
+  
   def max_height
-    @trees.max{|a, b| a.node_height <=> b.node_height }.node_height
+    heighest_node.node_height + 1
+  end
+
+  def widest_node
+    @trees.max{|a, b| a.children.size <=> b.children.size }
   end
   
   def max_width
-    @trees.max{|a, b| a.children.size <=> b.children.size }.children.size
+    widest_node.children.size
   end
   
   def top(n)
@@ -106,7 +118,7 @@ class Forest
   end
   
   def print_report(num = 3)
-    puts "Total #{total}: Average :#{avg} Max size :#{max_total} Max height :#{max_height} Max width :#{max_width}"
+    puts "Total #{sum}: Average :#{avg} Max size :#{max_sum} Max height :#{max_height} Max width :#{max_width}"
     puts "Top #{num} trees"
     top(num).each {|t| 
       puts t.size
@@ -150,7 +162,7 @@ private
     end
     p "remaining.size: #{remaining.size} previous: #{previous}"
     if remaining == [] || remaining.size == previous
-      # p "Ending"
+      @orphants = remaining 
     else
       p remaining
       add_recursive(current_generation , remaining, remaining.size)
@@ -179,12 +191,14 @@ class Tree::TreeNode
   end
 end
 
-data = []
-file_name = ARGV[0]
-p file_name
-CSV.open(file_name, 'r') do |row|
-  data << row
-end
-
-forest = Forest.new(data)
-forest.print_report(100)
+# p __FILE__
+# 
+# data = []
+# file_name = ARGV[0]
+# p file_name
+# CSV.open(file_name, 'r') do |row|
+#   data << row
+# end
+# 
+# forest = Forest.new(data)
+# forest.print_report(100)
