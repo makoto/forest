@@ -16,10 +16,10 @@ forest [filename]
 
 ## Input file format
 
-[parent key], [child key], [any content(optional)]
+    "parent key", "child key", "other attributes"(optional)
 
-- If last field is either nil, NULL, or "", then the row becomes a root tree
-- Any middle columns are optional. If you specify them, it will be showed at tree diagram as optional information.
+- If "child key" is either nil, NULL, or "", then the row becomes a root tree
+- If "other attributes" are specified, they will be showed at tree diagram as optional information.
 - Example sql to generate the input csv "select parent_id, id, name from foo"
 
 ## Input file example
