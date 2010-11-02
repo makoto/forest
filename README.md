@@ -8,7 +8,7 @@ This is a simple wrapper on top of [rubytree](http://rubytree.rubyforge.org/) fo
 
 ## Why ?
 
-Most database tables have some hierarchy related data (eg: who's your boss, who invited you to join, etc) without evan realising it in adjacency list format. Aggregating info from these trees are [a bit difficult if the depth of each trees are not even](http://dev.mysql.com/tech-resources/articles/hierarchical-data.html). Also, most trees only have 0 or 1 node attached, which need to be filtered out before rendering. That's why I created a simple wrapper to extract only trees (top x biggest trees) which are interesting enough to render.
+Most database tables have some hierarchy related data (eg: who's your boss, who invited you to join, etc) without even realising it in adjacency list format. Aggregating info from these trees are [a bit difficult if the depth of each trees are not even](http://dev.mysql.com/tech-resources/articles/hierarchical-data.html). Also, most trees only have 0 or 1 node attached, which need to be filtered out before rendering. That's why I created a simple wrapper to extract only trees (top x biggest trees) which are interesting enough to render.
 
 ## Usage
 
@@ -47,7 +47,7 @@ forest [filename]
     19,15
     20,15
 
-This will form the following tree hirarchy.
+This will form the following tree hierarchy.
 
     1 - 2 - 13
       - 3 - 4
@@ -108,12 +108,12 @@ And here is the output.
 
 I tried parsing about 80000 rows. It used to take about 20 min, but now it takes 40 sec with 200mb memory space. The result may very depending on how deep your each tree is.
 
-## TODO (or my wishlist)
+## TODO (or my wish list)
 
 - Get rid of "Node Name" output (Annoying)
 - Add more aggregate functions
 - Add more filtering functions (eg: show trees which has depth of more than 3)
-- Create a conversion program to draw on graphiviz diagram
+- Create a conversion program to draw on Graphviz diagram
 - Create a conversion program to draw histogram on R
-- Create a conversion program to [nested set model](http://en.wikipedia.org/wiki/Nested_set_model) or [materialized path](http://stackoverflow.com/questions/2797720/sorting-tree-with-a-materialized-path)
+- Create a conversion program to [nested set model](http://en.wikipedia.org/wiki/Nested_set_model) or [materialised path](http://stackoverflow.com/questions/2797720/sorting-tree-with-a-materialized-path)
 - Create an adapter to switch between rdbms, nosql, or file system to avoid storing everything in memory.
