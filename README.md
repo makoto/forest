@@ -66,7 +66,7 @@ And here is the output.
     forest examples/input.csv
     
     Total 20: Average :4.0 Max size :7 Max height :4 Max width :5, Sandard Deviation 2.28035085019828
-    Top 100 trees
+    Top 3 trees
     #1, sum 7, height 2
     * 1 foo,foo2,foo3
     |---+ 2 
