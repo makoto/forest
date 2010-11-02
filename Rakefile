@@ -8,7 +8,6 @@ begin
     gem.summary = %Q{A simple collection class to aggregate tree objects}
     gem.description = %Q{A simple collection class to aggregate tree objects.
     It takes [Adjacency List](http://sqlsummit.com/AdjacencyList.htm) as input, shows some stats and the top x biggest trees.}
-    gem.email = "inoeumak@googlemail.com"
     gem.homepage = "http://github.com/makoto/forest"
     gem.authors = ["Makoto Inoue"]
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
