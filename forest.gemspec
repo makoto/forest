@@ -3,8 +3,6 @@
 # Instead, edit Jeweler::Tasks in Rakefile, and run the gemspec command
 # -*- encoding: utf-8 -*-
 
-require 'bundler'
-
 Gem::Specification.new do |s|
   s.name = %q{forest}
   s.version = "0.1.0"
@@ -43,7 +41,6 @@ Gem::Specification.new do |s|
   s.test_files = [
     "test/test_forest.rb"
   ]
-  s.add_bundler_dependencies
   
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
