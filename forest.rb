@@ -1,6 +1,7 @@
 #! /usr/bin/ruby
 
 require 'rubygems'
+require "bundler/setup"
 require 'tree' 
 require 'pp'
 require 'csv'
@@ -118,7 +119,7 @@ private
     current_generation = {}
     counter = decendants.size
     decendants.map do |c| 
-      p "#{counter}: #{c.inspect}" if counter % 10 == 0
+      # p "#{counter}: #{c.inspect}" if counter % 10 == 0
       child  = c[0]
       parent = c[1]
       if parent_obj = ancestors[parent.to_s]

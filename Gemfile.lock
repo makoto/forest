@@ -1,0 +1,10 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    rubytree (0.8.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  rubytree
