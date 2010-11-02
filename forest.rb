@@ -1,65 +1,4 @@
 #! /usr/bin/ruby
-##  Tree hirarchy
-# 
-#
-# 1 - 2 - 13
-#   - 3 - 4
-#       - 5
-#       - 6
-# 7 - 8 - 9 - 10
-# 11
-# 12 - 14
-# 15 - 16
-#    - 17
-#    - 18
-#    - 19
-#    - 20
-# 
-## csv file format 
-# 1,foo,foo2,foo3,
-# 2,1
-# 13,2
-# 3,bar,1
-# 4,3
-# 5,3
-# 6,3
-# 10,9
-# 9,8
-# 8,7
-# 7,
-# 11,
-# 14,12
-# 12,
-# 16,15
-# 15,
-# 17,15
-# 18,15
-# 19,15
-# 20,15
-#
-## Array
-# data = [
-#   [1, "foo", "foo2", "foo3", nil] ,
-#   [2, 1]   ,
-#   [13, 2]  ,
-#   [3, "bar", 1]   ,
-#   [4, 3]   ,
-#   [5, 3]   ,
-#   [6, 3]   ,
-#   [10, 9]  ,
-#   [9, 8]   ,
-#   [8, 7]   ,
-#   [7, nil] ,
-#   [11, nil],
-#   [14, 12] ,
-#   [12, nil],
-#   [16, 15] ,
-#   [15, nil],
-#   [17, 15] ,
-#   [18, 15] ,
-#   [19, 15] ,
-#   [20, 15]
-# ]
 
 require 'rubygems'
 require 'tree' 
@@ -71,7 +10,7 @@ class Forest
   attr_accessor :trees, :orphants
   
   def initialize(data)
-    grouped_tree = data.group_by{|d| [nil, "NULL", ""].include?(d.last)}
+    grouped_tree = data.group_by{|d| [nil, "NULL", ""].include?(d[1])}
     @root = grouped_tree[true]
     @children = grouped_tree[false]
     add_root
@@ -149,7 +88,7 @@ private
   end
 
   def get_content(array)
-    array[1..-2].join(",")
+    array[2..-1].join(",")
   end
   
   def variance(population)
@@ -180,8 +119,8 @@ private
     counter = decendants.size
     decendants.map do |c| 
       p "#{counter}: #{c.inspect}" if counter % 10 == 0
-      child  = c.first
-      parent = c.last
+      child  = c[0]
+      parent = c[1]
       if parent_obj = ancestors[parent.to_s]
         parent_obj << Tree::TreeNode.new(child.to_s, get_content(c))
         current_generation[child.to_s] = parent_obj[child.to_s]

@@ -18,10 +18,10 @@ class TestForest < Test::Unit::TestCase
     #    - 20
     
     @data = [
-      [1, "foo", "foo2", "foo3", nil] ,
+      [1, nil, "foo", "foo2", "foo3"] ,
       [2, 1]   ,
       [13, 2]  ,
-      [3, "bar", 1]   ,
+      [3, 1, "bar"]   ,
       [4, 3]   ,
       [5, 3]   ,
       [6, 3]   ,
@@ -39,6 +39,7 @@ class TestForest < Test::Unit::TestCase
       [19, 15] ,
       [20, 15]
     ]
+    
     @forest = Forest.new(@data)
   end
   
