@@ -4,10 +4,11 @@
 
 A simple collection class to aggregate tree objects.
 It takes [Adjacency List](http://sqlsummit.com/AdjacencyList.htm) as input, shows some stats and the top x biggest trees.
+This is a simple wrapper on top of [rubytree](http://rubytree.rubyforge.org/) for now.
 
 ## Why ?
 
-Most database tables have some hierarchy related data (eg: who's your boss, who invited you to join, etc) without evan realising it in adjacency list format. Aggregating info from these trees are [a bit difficult if the depth of each trees are not even](http://dev.mysql.com/tech-resources/articles/hierarchical-data.html). Also, most trees only have 0 or 1 node attached, which need to be filtered out before rendering. That's why I created a simple wrapper to extract only trees (top x giggest trees) which are interesting enough to render.
+Most database tables have some hierarchy related data (eg: who's your boss, who invited you to join, etc) without evan realising it in adjacency list format. Aggregating info from these trees are [a bit difficult if the depth of each trees are not even](http://dev.mysql.com/tech-resources/articles/hierarchical-data.html). Also, most trees only have 0 or 1 node attached, which need to be filtered out before rendering. That's why I created a simple wrapper to extract only trees (top x biggest trees) which are interesting enough to render.
 
 ## Usage
 
