@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+$LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+require 'csv'
+require 'forest'
+
+data = []
+file_name = ARGV[0]
+CSV.open(file_name, 'r') do |row|
+  data << row
+end
+
+forest = Forest.new(data)
+forest.print_report(100)
+exit 0

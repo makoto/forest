@@ -2,7 +2,7 @@
 
 ## Summary
 
-A simple collection class to aggregate rubytree objects.
+A simple collection class to aggregate tree objects.
 It takes [Adjacency List](http://sqlsummit.com/AdjacencyList.htm) as input, shows some stats and the top x biggest trees.
 
 ## Why ?
@@ -11,7 +11,7 @@ Most database tables have some hierarchy related data (eg: who's your boss, who 
 
 ## Usage
 
-forest.rb [filename]
+forest [filename]
 
 ## Input file format
 
@@ -23,7 +23,7 @@ forest.rb [filename]
 
 ## Input file example
 
-### input.csv
+### examples/input.csv
 
     1,,foo,foo2,foo3
     2,1
@@ -63,7 +63,7 @@ This will form the following tree hirarchy.
 
 And here is the output.
     
-    ruby forest.rb input.csv
+    forest examples/input.csv
     
     Total 20: Average :4.0 Max size :7 Max height :4 Max width :5, Sandard Deviation 2.28035085019828
     Top 100 trees

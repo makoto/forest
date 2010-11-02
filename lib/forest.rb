@@ -3,9 +3,6 @@
 require 'rubygems'
 require "bundler/setup"
 require 'tree' 
-require 'pp'
-require 'csv'
-
 
 class Forest
   attr_accessor :trees, :orphants
@@ -163,15 +160,4 @@ class Tree::TreeNode
     
     children { |child| child.print_tree(level + 1)}
   end
-end
-
-if __FILE__ == $0  
-  data = []
-  file_name = ARGV[0]
-  CSV.open(file_name, 'r') do |row|
-    data << row
-  end
-
-  forest = Forest.new(data)
-  forest.print_report(100)
 end

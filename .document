@@ -1,0 +1,6 @@
+README.md
+lib/**/*.rb
+bin/*
+tmp/*
+features/**/*.feature
+LICENSE
